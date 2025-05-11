@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Port Chicago Mutiny: An Immersive Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%);
+        }
+        
+        .explosion-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .explosion-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,165,0,0.4) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .explosion-effect:hover::before {
+            opacity: 1;
+        }
+        
+        .timeline-path {
+            position: relative;
+        }
+        
+        .timeline-path::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #3b82f6, #10b981, #f59e0b);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-card {
+            position: relative;
+            transition: all 0.3s ease;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+        
+        .left-card::before {
+            right: -30px;
+        }
+        
+        .right-card::before {
+            left: -30px;
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .visible {
+            opacity: 1;
+        }
+        
+        .nav-glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quote-card {
+            background: linear-gradient(145deg, rgba(30, 58, 138, 0.6), rgba(15, 23, 42, 0.8));
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .floating-ship {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Animated Navigation -->
+    <nav class="nav-glass fixed w-full z-50 py-4 px-6 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-amber-500 flex items-center justify-center">
+                    <i class="fas fa-anchor text-white"></i>
+                </div>
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-amber-300">Port Chicago 1944</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#introduction" class="text-gray-300 hover:text-white transition-all group">
+                    <span class="relative">
+                        Introduction
+                        <span class="absolute left-0 bottom-0 h-0.5 bg-amber-400 w-0 group-hover:w-full transition-all duration-300"></span>
+                    </span>
+                </a>
+                <a href="#disaster" class="text-gray-300 hover:text-white transition-all group">
+                    <span class="relative">
+                        The Disaster
+                        <span class="absolute left-0 bottom-0 h-0.5 bg-amber-400 w-0 group-hover:w-full transition-all duration-300"></span>
+                    </span>
+                </a>
+                <a href="#mutiny" class="text-gray-300 hover:text-white transition-all group">
+                    <span class="relative">
+                        The Mutiny
+                        <span class="absolute left-0 bottom-0 h-0.5 bg-amber-400 w-0 group-hover:w-full transition-all duration-300"></span>
+                    </span>
+                </a>
+                <a href="#legacy" class="text-gray-300 hover:text-white transition-all group">
+                    <span class="relative">
+                        Legacy
+                        <span class="absolute left-0 bottom-0 h-0.5 bg-amber-400 w-0 group-hover:w-full transition-all duration-300"></span>
+                    </span>
+                </a>
+            </div>
+            <button class="md:hidden text-gray-300 hover:text-white">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cinematic Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden hero-gradient">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-1/4 left-1/4 w-40 h-40 rounded-full bg-blue-500 opacity-20 filter blur-3xl"></div>
+            <div class="absolute bottom-1/3 right-1/4 w-60 h-60 rounded-full bg-amber-500 opacity-20 filter blur-3xl"></div>
+            <div class="absolute top-1/3 right-1/3 w-80 h-80 rounded-full bg-rose-500 opacity-10 filter blur-3xl"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto fade-in">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-amber-200">
+                <span class="inline-block">Port Chicago</span> 
+                <span class="inline-block mt-2">Mutiny</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                The forgotten story of courage and injustice that shook America during WWII
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="Article.html" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full text-white font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1">
+                    Read the Article
+                </a>
+                <a href="#introduction" class="px-8 py-4 border border-gray-600 rounded-full text-white font-medium hover:bg-gray-800/50 transition-all">
+                    Begin the Journey
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 text-center animate-bounce">
+            <a href="#introduction" class="inline-block text-gray-400 hover:text-white transition">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+        
+        <!-- Floating ship animation -->
+        <div class="absolute bottom-10 right-10 floating-ship opacity-70">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                <path d="M22 18v2H4a2 2 0 0 1-2-2V8"></path>
+                <path d="M4 8V6a2 2 0 0 1 2-2h6"></path>
+                <path d="M18 6h4v12h-4"></path>
+                <path d="M10 22 8 12"></path>
+                <path d="m14 22 2-10"></path>
+                <path d="M7.5 12h9"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Story Navigation Timeline -->
+    <div class="relative py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex overflow-x-auto pb-8 hide-scrollbar">
+                <div class="flex space-x-8">
+                    <a href="#introduction" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-full bg-gray-800 border-2 border-blue-500 flex items-center justify-center group-hover:bg-blue-600 transition-all mb-3">
+                            <span class="text-white font-bold">1</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-white transition">Introduction</span>
+                    </a>
+                    <a href="#disaster" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-full bg-gray-800 border-2 border-amber-500 flex items-center justify-center group-hover:bg-amber-600 transition-all mb-3">
+                            <span class="text-white font-bold">2</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-white transition">The Disaster</span>
+                    </a>
+                    <a href="#mutiny" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-full bg-gray-800 border-2 border-rose-500 flex items-center justify-center group-hover:bg-rose-600 transition-all mb-3">
+                            <span class="text-white font-bold">3</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-white transition">The Mutiny</span>
+                    </a>
+                    <a href="#legacy" class="flex flex-col items-center group">
+                        <div class="w-16 h-16 rounded-full bg-gray-800 border-2 border-emerald-500 flex items-center justify-center group-hover:bg-emerald-600 transition-all mb-3">
+                            <span class="text-white font-bold">4</span>
+                        </div>
+                        <span class="text-gray-400 group-hover:text-white transition">Legacy</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-blue-900/30 to-black/80"></div>
+            <div class="absolute inset-0 bg-[url('https://www.nps.gov/common/uploads/hero_home/pwr/heroImg/port-chicago/3A7A2C4F-1DD8-B71B-0B6A0A5E5E4B4F9A.jpg')] bg-cover bg-center opacity-30"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex items-center mb-16">
+                <div class="h-0.5 bg-gradient-to-r from-blue-500 to-amber-500 flex-1"></div>
+                <h2 class="mx-6 text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-amber-200">
+                    A Hidden Chapter of History
+                </h2>
+                <div class="h-0.5 bg-gradient-to-r from-amber-500 to-blue-500 flex-1"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 shadow-xl">
+                    <p class="text-lg leading-relaxed mb-6">
+                        When we learn about World War II, we hear of D-Day, Pearl Harbor, and the Pacific theater. But few know about <span class="text-blue-300 font-medium">Port Chicago</span> - a tragedy on American soil that exposed deep racial injustices and sparked one of the largest mutinies in U.S. Navy history.
+                    </p>
+                    
+                    <div class="quote-card p-6 rounded-lg my-8">
+                        <p class="italic text-gray-200">
+                            "The explosion at Port Chicago was the worst home-front disaster of World War II, yet most Americans have never heard of it. The subsequent mutiny trial was equally significant, challenging racial discrimination in the military."
+                        </p>
+                        <p class="text-right mt-3 text-amber-300">— Dr. Robert L. Allen, Historian</p>
+                    </div>
+                    
+                    <p class="text-lg leading-relaxed">
+                        This is the story of <span class="text-amber-300">320 men killed</span>, <span class="text-rose-400">50 sailors court-martialed</span>, and how their sacrifice became a catalyst for change in the fight for civil rights.
+                    </p>
+                </div>
+                
+                <div class="relative h-96 rounded-2xl overflow-hidden border-2 border-gray-700 shadow-lg explosion-effect">
+                    <div class="absolute inset-0 bg-[url('PortChicagoNavalMagazine.jpg')] bg-cover bg-center"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80 flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Port Chicago Naval Magazine</h3>
+                            <p class="text-gray-300">The site of the catastrophic explosion on July 17, 1944</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-blue-900/50 to-gray-900/80 p-6 rounded-xl border border-gray-800 hover:border-blue-500 transition-all group">
+                    <div class="w-14 h-14 rounded-full bg-blue-900/50 flex items-center justify-center mb-4 group-hover:bg-blue-700 transition">
+                        <i class="fas fa-users-between-lines text-blue-300 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Segregated Navy</h3>
+                    <p class="text-gray-300">Black sailors were restricted to manual labor units with no combat roles</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-amber-900/50 to-gray-900/80 p-6 rounded-xl border border-gray-800 hover:border-amber-500 transition-all group">
+                    <div class="w-14 h-14 rounded-full bg-amber-900/50 flex items-center justify-center mb-4 group-hover:bg-amber-700 transition">
+                        <i class="fas fa-bomb text-amber-300 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Dangerous Work</h3>
+                    <p class="text-gray-300">Handling explosives with minimal training under unsafe conditions</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-rose-900/50 to-gray-900/80 p-6 rounded-xl border border-gray-800 hover:border-rose-500 transition-all group">
+                    <div class="w-14 h-14 rounded-full bg-rose-900/50 flex items-center justify-center mb-4 group-hover:bg-rose-700 transition">
+                        <i class="fas fa-scale-balanced text-rose-300 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Legal Injustice</h3>
+                    <p class="text-gray-300">50 men convicted of mutiny for refusing unsafe working conditions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Disaster Section -->
+    <section id="disaster" class="py-20 bg-black relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-[url('4.png')] bg-cover bg-center opacity-20"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-black/90 to-black"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex items-center mb-16">
+                <div class="h-0.5 bg-gradient-to-r from-amber-500 to-rose-500 flex-1"></div>
+                <h2 class="mx-6 text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-rose-300">
+                    The Night That Shook California
+                </h2>
+                <div class="h-0.5 bg-gradient-to-r from-rose-500 to-amber-500 flex-1"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="relative h-96 rounded-2xl overflow-hidden border-2 border-gray-700 shadow-lg">
+                    <div class="absolute inset-0 bg-[url('TheAftermath.jpg')] bg-cover bg-center"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80 flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">The Aftermath</h3>
+                            <p class="text-gray-300">Destruction at Port Chicago after the explosion</p>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                        July 17, 1944
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 shadow-xl">
+                    <h3 class="text-2xl font-bold mb-4 text-white">10:19 PM - The Explosion</h3>
+                    <p class="text-lg leading-relaxed mb-6">
+                        At precisely 10:19 PM, two ships being loaded with ammunition at Port Chicago Naval Magazine exploded with the force of <span class="text-amber-300">5,000 tons of TNT</span>. The blast was so powerful it registered as a <span class="text-rose-300">3.4 magnitude earthquake</span> and could be felt 200 miles away.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center">
+                                    <i class="fas fa-skull text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300"><span class="font-bold text-white">320 men killed instantly</span> - 202 were African American sailors (63% of all Black casualties in the Navy during WWII)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center">
+                                    <i class="fas fa-fire text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">The blast <span class="font-bold text-white">vaporized two ships</span>, destroyed the pier, and damaged buildings miles away</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+                                    <i class="fas fa-user-shield text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">White officers were given <span class="font-bold text-white">30 days leave</span> while Black sailors were immediately ordered to clean up the remains</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-amber-900/50 to-rose-900/50 rounded-2xl p-8 border border-amber-800/50 shadow-xl mb-16">
+                <h3 class="text-2xl font-bold mb-4 text-white">The Dangerous Work</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-300 mb-6">
+                            The work at Port Chicago was extraordinarily dangerous. Black sailors were forced to:
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i class="fas fa-chevron-right text-amber-400 text-xs"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-300">Load bombs and ammunition <span class="text-white font-medium">without proper training</span></p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i class="fas fa-chevron-right text-amber-400 text-xs"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-300">Work under <span class="text-white font-medium">extreme pressure</span> to meet quotas</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i class="fas fa-chevron-right text-amber-400 text-xs"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-300">Handle explosives <span class="text-white font-medium">without safety equipment</span></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="bg-black/30 p-4 rounded-lg border border-amber-800/50">
+                            <p class="italic text-amber-200 mb-3">
+                                "They would roll the shells down the pier on wooden dollies. Sometimes they'd drop them. The officers would bet on which crew could load the most ammunition the fastest."
+                            </p>
+                            <p class="text-right text-amber-400">— Survivor testimony</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-6 text-white">The Aftermath in Numbers</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800">
+                        <div class="text-4xl font-bold text-amber-400 mb-2">320</div>
+                        <div class="text-gray-400">Total killed</div>
+                    </div>
+                    <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800">
+                        <div class="text-4xl font-bold text-rose-400 mb-2">202</div>
+                        <div class="text-gray-400">Black sailors killed</div>
+                    </div>
+                    <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800">
+                        <div class="text-4xl font-bold text-blue-400 mb-2">390</div>
+                        <div class="text-gray-400">Injured</div>
+                    </div>
+                    <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800">
+                        <div class="text-4xl font-bold text-emerald-400 mb-2">5K</div>
+                        <div class="text-gray-400">Tons of TNT equivalent</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Mutiny Section -->
+    <section id="mutiny" class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 via-gray-900 to-gray-900"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex items-center mb-16">
+                <div class="h-0.5 bg-gradient-to-r from-blue-500 to-emerald-500 flex-1"></div>
+                <h2 class="mx-6 text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-emerald-300">
+                    The Mutiny Trial
+                </h2>
+                <div class="h-0.5 bg-gradient-to-r from-emerald-500 to-blue-500 flex-1"></div>
+            </div>
+            
+            <div class="mb-16">
+                <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700 shadow-xl">
+                    <h3 class="text-2xl font-bold mb-4 text-white">The Refusal to Work</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-lg leading-relaxed mb-6 text-gray-300">
+                                Three weeks after the explosion, <span class="text-blue-300">258 African American sailors</span> refused to resume loading ammunition under the same dangerous conditions. The Navy saw this as mutiny - a crime punishable by death during wartime.
+                            </p>
+                            
+                            <div class="bg-black/30 p-4 rounded-lg border border-blue-800/50 mb-6">
+                                <p class="italic text-blue-200 mb-3">
+                                    "We weren't afraid of dying. We were afraid of dying for nothing. We wanted to know why only Black men were doing this dangerous work, and why we weren't being trained properly."
+                                </p>
+                                <p class="text-right text-blue-400">— Joe Small, one of the accused</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mt-1">
+                                        <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
+                                            <i class="fas fa-scale-balanced text-white text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-300"><span class="font-bold text-white">50 men were singled out</span> as ringleaders and charged with mutiny</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mt-1">
+                                        <div class="w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center">
+                                            <i class="fas fa-gavel text-white text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-300">The trial lasted <span class="font-bold text-white">6 weeks</span> with an all-white jury of Navy officers</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mt-1">
+                                        <div class="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center">
+                                            <i class="fas fa-clock text-white text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-300">All 50 were convicted and sentenced to <span class="font-bold text-white">8-15 years</span> of hard labor</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-center text-white">The Timeline of Injustice</h3>
+                
+                <div class="timeline-path">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Left Column -->
+                        <div class="space-y-8">
+                            <div class="timeline-card left-card p-6 rounded-xl border border-gray-700 ml-auto max-w-md">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                                    <span class="text-sm text-blue-400">July 17, 1944</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-white">The Explosion</h4>
+                                <p class="text-gray-300">Catastrophic detonation kills 320, mostly Black sailors</p>
+                            </div>
+                            
+                            <div class="timeline-card left-card p-6 rounded-xl border border-gray-700 ml-auto max-w-md">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 rounded-full bg-amber-500 mr-2"></div>
+                                    <span class="text-sm text-amber-400">July 21, 1944</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-white">Navy Inquiry</h4>
+                                <p class="text-gray-300">White officers cleared, Black sailors blamed</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column -->
+                        <div class="space-y-8 mt-16">
+                            <div class="timeline-card right-card p-6 rounded-xl border border-gray-700 mr-auto max-w-md">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 rounded-full bg-rose-500 mr-2"></div>
+                                    <span class="text-sm text-rose-400">August 9, 1944</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-white">The Refusal</h4>
+                                <p class="text-gray-300">258 Black sailors refuse to resume unsafe work</p>
+                            </div>
+                            
+                            <div class="timeline-card right-card p-6 rounded-xl border border-gray-700 mr-auto max-w-md">
+                                <div class="flex items-center mb-2">
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></div>
+                                    <span class="text-sm text-emerald-400">September 1944</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-white">Court-Martial</h4>
+                                <p class="text-gray-300">50 sailors convicted of mutiny</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-900/50 to-emerald-900/50 rounded-2xl p-8 border border-blue-800/50 shadow-xl">
+                <h3 class="text-2xl font-bold mb-4 text-white">Thurgood Marshall's Intervention</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <p class="text-gray-300 mb-6">
+                            The NAACP, led by future Supreme Court Justice <span class="text-blue-300 font-medium">Thurgood Marshall</span>, took up the case. Marshall attended the trial and wrote scathing reports about its unfairness.
+                        </p>
+                        
+                        <div class="bg-black/30 p-4 rounded-lg border border-blue-800/50">
+                            <p class="italic text-blue-200 mb-3">
+                                "This is not 50 men on trial for mutiny. This is the Navy on trial for its whole vicious policy toward Negroes. Negroes are not afraid of anything any more than anyone else. They do not like to be the butt of ridicule and discrimination."
+                            </p>
+                            <p class="text-right text-blue-400">— Thurgood Marshall</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                                        <i class="fas fa-balance-scale text-blue-600 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-300">Marshall's reports brought <span class="font-bold text-white">national attention</span> to the case</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                                        <i class="fas fa-gavel text-blue-600 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-300">Public pressure led to <span class="font-bold text-white">reduced sentences</span></p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                                        <i class="fas fa-clock text-blue-600 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-300">All 50 men were <span class="font-bold text-white">released in 1946</span> after serving 16 months</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy Section -->
+    <section id="legacy" class="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-[url('4.png')] bg-cover bg-center opacity-10"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="flex items-center mb-16">
+                <div class="h-0.5 bg-gradient-to-r from-emerald-500 to-blue-500 flex-1"></div>
+                <h2 class="mx-6 text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-blue-300">
+                    The Lasting Impact
+                </h2>
+                <div class="h-0.5 bg-gradient-to-r from-blue-500 to-emerald-500 flex-1"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="bg-gray-900/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-800 shadow-xl">
+                    <h3 class="text-2xl font-bold mb-4 text-white">Catalyst for Change</h3>
+                    <p class="text-lg leading-relaxed mb-6 text-gray-300">
+                        The Port Chicago disaster and mutiny trial became a turning point in the fight against military segregation. While the Navy initially tried to cover up the incident, the controversy helped push the military toward integration.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
+                                    <i class="fas fa-flag-usa text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300"><span class="font-bold text-white">Executive Order 9981</span> (1948) began military desegregation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+                                    <i class="fas fa-book text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">The case became part of <span class="font-bold text-white">civil rights legal strategy</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-6 h-6 rounded-full bg-amber-500 flex items-center justify-center">
+                                    <i class="fas fa-landmark text-white text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-gray-300">In 1999, the <span class="font-bold text-white">Port Chicago Naval Magazine National Memorial</span> was established</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative h-96 rounded-2xl overflow-hidden border-2 border-gray-700 shadow-lg">
+                    <div class="absolute inset-0 bg-[url('AC9h4npIdjt9njLOW2ZkzamkoQ4Y7PSN.jpg')] bg-cover bg-center"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80 flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Port Chicago Memorial</h3>
+                            <p class="text-gray-300">Honoring those who lost their lives</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mb-16">
+                <h3 class="text-2xl font-bold mb-6 text-white">Why Remember Port Chicago?</h3>
+                <div class="max-w-3xl mx-auto">
+                    <p class="text-lg leading-relaxed text-gray-300 mb-8">
+                        The Port Chicago story reminds us that progress often comes through struggle. These sailors, though largely forgotten, helped change America. Their story connects to broader themes of:
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800 hover:border-blue-500 transition-all group">
+                            <div class="w-16 h-16 rounded-full bg-blue-900/50 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-700 transition">
+                                <i class="fas fa-scale-balanced text-blue-300 text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-2 text-white">Justice</h4>
+                            <p class="text-gray-300">Challenging systemic racism in institutions</p>
+                        </div>
+                        
+                        <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800 hover:border-amber-500 transition-all group">
+                            <div class="w-16 h-16 rounded-full bg-amber-900/50 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-700 transition">
+                                <i class="fas fa-users text-amber-300 text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-2 text-white">Courage</h4>
+                            <p class="text-gray-300">Standing up against injustice despite risks</p>
+                        </div>
+                        
+                        <div class="bg-gray-900/80 p-6 rounded-xl border border-gray-800 hover:border-emerald-500 transition-all group">
+                            <div class="w-16 h-16 rounded-full bg-emerald-900/50 flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-700 transition">
+                                <i class="fas fa-history text-emerald-300 text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-2 text-white">Memory</h4>
+                            <p class="text-gray-300">Preserving overlooked chapters of history</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-900/50 to-emerald-900/50 rounded-2xl p-8 border border-blue-800/50 shadow-xl text-center">
+                <h3 class="text-2xl font-bold mb-4 text-white">Visit the Memorial</h3>
+                <p class="text-lg leading-relaxed text-gray-300 mb-8 max-w-2xl mx-auto">
+                    The Port Chicago Naval Magazine National Memorial honors the lives lost in the explosion and preserves this important story for future generations.
+                </p>
+                <a href="https://www.nps.gov/poch/index.htm" target="_blank" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-emerald-600 text-white px-8 py-4 rounded-full font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1">
+                    <i class="fas fa-external-link-alt mr-2"></i>
+                    Learn More at NPS.gov
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Reflection -->
+    <section class="py-20 bg-black relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black"></div>
+            <div class="absolute inset-0 opacity-30">
+                <div class="absolute top-1/4 left-1/4 w-40 h-40 rounded-full bg-blue-500 filter blur-3xl"></div>
+                <div class="absolute bottom-1/3 right-1/4 w-60 h-60 rounded-full bg-amber-500 filter blur-3xl"></div>
+            </div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            <div class="w-24 h-1 bg-gradient-to-r from-blue-400 to-amber-400 mx-auto mb-8"></div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-amber-200">
+                A Story That Still Resonates
+            </h2>
+            
+            <p class="text-xl leading-relaxed text-gray-300 mb-10">
+                The Port Chicago Mutiny is more than a historical event—it's a mirror reflecting America's ongoing struggle with racial justice. These sailors, though largely forgotten, helped change the course of history through their courage and sacrifice.
+            </p>
+            
+            <div class="p-8 bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-800 max-w-2xl mx-auto mb-12">
+                <p class="italic text-2xl text-white mb-6">
+                    "Those who cannot remember the past are condemned to repeat it."
+                </p>
+                <p class="text-amber-400">— George Santayana</p>
+            </div>
+            
+            <a href="#introduction" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 py-4 rounded-full font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-1 mb-16">
+                <i class="fas fa-chevron-up mr-2"></i>
+                Return to Beginning
+            </a>
+            
+            <div class="border-t border-gray-800 pt-12">
+                <h3 class="text-xl font-bold mb-6 text-white">Share This Story</h3>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center text-white transition">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-blue-700 flex items-center justify-center text-white transition">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white transition">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 rounded-full bg-gray-800 hover:bg-red-600 flex items-center justify-center text-white transition">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-amber-500 flex items-center justify-center">
+                            <i class="fas fa-anchor text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-amber-300">Port Chicago 1944</span>
+                    </div>
+                    <p class="text-gray-400">
+                        This work was created by Mohammad A-Nattour under the guidance of Mr. Roberts and Mr. Emanuel, whose support and supervision were instrumental in its development.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#introduction" class="text-gray-400 hover:text-blue-300 transition">Introduction</a></li>
+                        <li><a href="#disaster" class="text-gray-400 hover:text-blue-300 transition">The Disaster</a></li>
+                        <li><a href="#mutiny" class="text-gray-400 hover:text-blue-300 transition">The Mutiny</a></li>
+                        <li><a href="#legacy" class="text-gray-400 hover:text-blue-300 transition">Legacy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.nps.gov/poch/index.htm" class="text-gray-400 hover:text-blue-300 transition" target="_blank">National Park Service</a></li>
+                        <li><a href="https://www.nationalww2museum.org/war/articles/port-chicago-disaster" class="text-gray-400 hover:text-blue-300 transition" target="_blank">National WWII Museum</a></li>
+                        <li><a href="https://www.history.navy.mil/" class="text-gray-400 hover:text-blue-300 transition" target="_blank">Naval History Command</a></li>
+                        <li><a href="https://www.naacp.org/" class="text-gray-400 hover:text-blue-300 transition" target="_blank">NAACP</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4">Connect</h3>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://x.com/MohmadNat" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://sdmntprwestus2.oaiusercontent.com/files/00000000-0450-61f8-b880-bce4f23aa56e/raw?se=2025-05-10T04%3A11%3A12Z&sp=r&sv=2024-08-04&sr=b&scid=00000000-0000-0000-0000-000000000000&skoid=71e8fa5c-90a9-4c17-827b-14c3005164d6&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-09T11%3A25%3A30Z&ske=2025-05-10T11%3A25%3A30Z&sks=b&skv=2024-08-04&sig=12vCukzWYxNGOEeYQ%2BIPAefGrXdkkvanrSN4JbN3xbQ%3D" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-700 flex items-center justify-center text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/mohammed_anatour?igsh=MzRlODBiNWFlZA==" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400">
+                        Contact: mohmadnat869@gmail.com
+                    </p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 Port Chicago 1944 Project.
+                Mohammad A-Nattour.</p>
+                <p class="mt-2 text-sm">This educational resource is not affiliated with the U.S. Navy or National Park Service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Intersection Observer for fade-in animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {threshold: 0.1});
+        
+        fadeElements.forEach(element => {
+            fadeObserver.observe(element);
+        });
+        
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('shadow-lg');
+                nav.classList.add('bg-gray-900/90');
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.classList.remove('bg-gray-900/90');
+            }
+        });
+        
+        // Timeline animation
+        const timelineCards = document.querySelectorAll('.timeline-card');
+        
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {threshold: 0.1});
+        
+        timelineCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            timelineObserver.observe(card);
+        });
+    </script>
+</body>
+</html>
